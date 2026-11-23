@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Login — UFO Battle</title>
+    <meta name="color-scheme" content="dark light">
+
+    <!-- To set the theme as fast as possible to avoid flash of wrong theme -->
+    <script src="js/theme-boot.js"></script>
+
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Icons (Font Awesome) -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          referrerpolicy="no-referrer"/>
+
+    <!-- Inject the shared topbar into #topbar on every page -->
+    <script src="js/topbar.js"></script>
+
+    <script defer src="js/api.js"></script>
+    <script defer src="js/app.js"></script>
+</head>
+
+<body>
+<div class="wrap">
+
+    <!-- Shared navigation bar gets injected here by js/topbar.js -->
+    <div id="topbar"></div>
+
+
+    <div class="card brand">
+        <!-- Login card -->
+        <div class="auth-card login">
+            <h3 style="margin-top:0">User identification</h3>
+
+            <div class="row">
+                <label for="loginUser">User</label>
+                <input id="loginUser" type="text" maxlength="8" placeholder="username">
+            </div>
+
+            <div class="row">
+                <label for="loginPass">Password</label>
+                <input id="loginPass" type="password" placeholder="password">
+            </div>
+
+            <!-- Send button -->
+            <div class="row actions">
+                <button class="btn primary" id="btnDoLogin">
+                    <i class="fa-solid fa-right-to-bracket" aria-hidden="true" style="margin-right:.4rem"></i>
+                    Send
+                </button>
+            </div>
+
+            <!-- Example Users -->
+            <div id="authMsg" class="hint"></div>
+            <div class="hint">Test users: <strong>user1/user1</strong> or <strong>user2/user2</strong>.</div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('btnDoLogin').addEventListener('click', async () => {
+            const username = document.getElementById('loginUser').value.trim();
+            const password = document.getElementById('loginPass').value;
+            const msg = document.getElementById('authMsg');
+            msg.textContent = '';
+            if (!username || !password) {
+                msg.textContent = 'Enter username and password.';
+                return;
+            }
+            try {
+                const token = await window.API.login(username, password);
+                msg.textContent = 'Token stored. You can now open Records and Play to save your score.';
+            } catch (err) {
+                msg.textContent = 'Login error: ' + err.message;
+            }
+        });
+    </script>
+
+
+    <footer>© UPM – Web Development Practical · UFO Battle</footer>
+</div>
+</body>
+</html>

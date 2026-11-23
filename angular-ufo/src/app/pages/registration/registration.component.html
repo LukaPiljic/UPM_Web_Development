@@ -1,0 +1,36 @@
+<div class="card brand">
+  <div class="auth-card register">
+    <h3>Register new User</h3>
+
+    <div class="row">
+      <label>User</label>
+      <input type="text" [(ngModel)]="username" (blur)="checkUser()" placeholder="username" required>
+    </div>
+    <div class="nt" *ngIf="userExistsError" style="color:red; margin-left:235px; margin-bottom:10px;">
+      Username already exists!
+    </div>
+
+    <div class="row">
+      <label>Email</label>
+      <input type="email" [(ngModel)]="email" placeholder="you@example.com" required>
+    </div>
+
+    <div class="row">
+      <label>Password</label>
+      <input type="password" [(ngModel)]="password" required>
+    </div>
+
+    <div class="row">
+      <label>Repeat password</label>
+      <input type="password" [(ngModel)]="passwordRepeat" required>
+    </div>
+
+    <div class="row actions">
+      <button class="btn primary" (click)="doRegister()"
+              [disabled]="userExistsError || !username || !password">
+        Send
+      </button>
+    </div>
+    <div class="hint" style="color:red">{{ msg }}</div>
+  </div>
+</div>

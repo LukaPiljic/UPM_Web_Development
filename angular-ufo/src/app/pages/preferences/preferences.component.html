@@ -1,0 +1,62 @@
+<div class="card brand">
+  <form class="pref" (submit)="$event.preventDefault()">
+    <h3>Preferences</h3>
+
+    <div class="row">
+      <label>Number of UFOs</label>
+      <!-- so the [] is property binding ==> schickt Daten zum Element
+           () das ist Event Binding ==> hört auf die Änderungen vom Element -->
+      <select [(ngModel)]="model.ufos" name="ufos" (ngModelChange)="updateExplainer()">
+        <option [ngValue]="1">1</option>
+        <option [ngValue]="5">5</option>
+        <option [ngValue]="9">9</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <label>Time (seconds)</label>
+      <select [(ngModel)]="model.time" name="time" (ngModelChange)="updateExplainer()">
+        <option [ngValue]="60">60</option>
+        <option [ngValue]="120">120</option>
+        <option [ngValue]="180">180</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <label>Double speed</label>
+      <input type="checkbox" [(ngModel)]="model.doubleSpeed" name="doubleSpeed" (ngModelChange)="updateExplainer()">
+    </div>
+
+    <div class="row">
+      <button class="btn" (click)="save()">
+        <i class="fa-solid fa-check" style="margin-right: 0.4rem;"></i> Accept
+      </button>
+
+      <a class="btn primary" routerLink="/play">
+        <i class="fa-solid fa-play" style="margin-right: 0.4rem;"></i> Play now
+      </a>
+    </div>
+  </form>
+
+  <div id="score-explainer" class="pref" style="margin-top:14px;">
+    <details>
+      <summary><strong>How is the final score calculated?</strong></summary>
+      <ol>
+        <li>Start with your <em>Raw score</em> (each hit = <code>+100</code>; a miss costs <code>25</code>, but raw never goes below <code>0</code>).</li>
+        <li>Divide by a time factor:
+          <ul>
+            <li>60 s → ÷ 1</li>
+            <li>120 s → ÷ 2</li>
+            <li>180 s → ÷ 3</li>
+          </ul>
+        </li>
+        <li>Subtract <code>50</code> points for each selected UFO beyond the first: <em>penalty = 50 × max(0, UFOs − 1)</em>.</li>
+        <li>If <em>Double speed</em> was enabled, add <code>+250</code> points.</li>
+        <li>Clamp at the end: <code>Final = max(0, …)</code></li>
+      </ol>
+      <p class="hint" style="margin-top:.5rem">
+        {{ explainerText }}
+      </p>
+    </details>
+  </div>
+</div>

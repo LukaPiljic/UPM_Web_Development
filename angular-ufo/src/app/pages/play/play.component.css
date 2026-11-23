@@ -1,0 +1,60 @@
+
+.score-panel > div strong {
+  color: color-mix(in oklab, var(--ink) 95%, var(--brand-hero) 5%);
+}
+
+/* for the small seperator line  (hr is horizontal rule) */
+.score-panel hr {
+  border: 0;
+  height: 1px;
+  background: color-mix(in oklab, #000 25%, var(--brand-hero));
+  opacity: 0.6;
+  margin: 8px 0 10px;
+}
+
+.score-panel .hint {
+  color: color-mix(in oklab, var(--ink) 92%, var(--brand-hero) 8%);
+  opacity: 1;
+}
+
+/* for the looks of the buttons in the side-panel (kbd is keyboard) */
+.score-panel .kbd {
+  background: #eef3ff;
+  color: #0b1530;
+  border: 1px solid color-mix(in oklab, #000 15%, var(--brand-hero));
+}
+
+/* to override the global, so the sky looks white/light blue */
+canvas {
+  background: #eef3ff;
+  display: block;
+  height: auto;
+}
+
+
+/* for the buttons (play again, edit prefs. and save) */
+.endcard .end-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* because the edit prefs is indeed a routerLink, but we want to make it look like a regular btn */
+.overlay .card .btn-link {
+  text-decoration: none; /* removes the underline of links */
+  display: inline-flex;
+  align-items: center;
+  background: #1e3a8a;
+  border: 1px solid #1b2f6b;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 13.333px;
+  cursor: pointer;
+}
+
+.overlay .card .btn-link:hover {
+  filter: brightness(1.05); /* some small brightness when we hover of the btn */
+}

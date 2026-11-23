@@ -1,0 +1,15 @@
+{
+  "name": "scoreserver",
+  "version": "1.0.0",
+  "description": "Local node server for UFO Battle records",
+  "main": "scoreserver.js",
+  "scripts": {
+    "start": "node --env-file=.env scoreserver.js",
+    "start:pwd": "node --env-file=.env pwdserver.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "mysql2": "^3.6.5"
+  }
+}

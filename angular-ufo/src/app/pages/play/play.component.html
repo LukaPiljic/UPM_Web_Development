@@ -1,0 +1,65 @@
+<div class="card play-wrap">
+  <aside class="score-panel card brand">
+
+    <!-- {{ property/method }} bedeutet, dass wir den Wert von dem Feld hier einsetzten, ist aus der component
+    die damit verbunden ist (templateURL) -->
+
+    <div><strong>Time left</strong>: {{ timeLeft | number:'1.0-0' }}s</div>
+    <div><strong>Punctuation</strong>: {{ score }}</div>
+    <div><strong>UFOs</strong>: {{ ufos.length }}</div>
+    <div><strong>Speed</strong>: {{ doubleSpeed ? (hasDoubled ? '2x' : '1x') : '1x' }}</div>
+    <hr>
+
+    <div class="hint" *ngIf="!gameOver">
+      Controls:
+      <span class="kbd">←</span>/<span class="kbd">→</span> or
+      <span class="kbd">A</span>/<span class="kbd">D</span> to move (before firing).
+      <span class="kbd">Space</span> to shoot.
+      <span class="kbd">R</span> restart.
+    </div>
+
+    <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;" *ngIf="!gameOver">
+      <button class="btn" type="button" (click)="playAgain()">
+        <i class="fa-solid fa-rotate-right" aria-hidden="true" style="margin-right:.4rem"></i>
+        Restart
+      </button>
+    </div>
+
+    <div *ngIf="gameOver" style="margin-top:12px;">
+      <h3>Time's up!</h3>
+      <p>Final Score: <strong class="final-score">{{ finalScore }}</strong></p>
+    </div>
+  </aside>
+
+  <div class="canvas-wrap">
+    <canvas #gameCanvas width="800" height="520"></canvas>
+
+    <div class="overlay" [class.show]="gameOver">
+      <div class="card endcard brand" style="text-align:center; max-width:460px;">
+        <h3>Time’s up!</h3>
+        <p><strong class="final-score">{{ finalScore }}</strong></p>
+
+        <div class="end-actions">
+          <button class="btn primary" type="button" (click)="playAgain()">
+            <i class="fa-solid fa-gamepad" style="margin-right:.4rem"></i>
+            Play again
+          </button>
+
+          <a class="btn-link" routerLink="/preferences">
+            <i class="fa-solid fa-sliders" style="margin-right:.4rem"></i>
+            Edit preferences
+          </a>
+
+          <button class="btn" type="button" *ngIf="auth.currentUser()" (click)="saveScore()">
+            <i class="fa-solid fa-cloud-arrow-up" style="margin-right:.4rem"></i>
+            Save my record
+          </button>
+        </div>
+
+        <div class="hint" *ngIf="!auth.currentUser()" style="margin-top:10px;">
+          Login to save scores.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

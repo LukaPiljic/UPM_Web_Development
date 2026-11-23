@@ -1,0 +1,40 @@
+<div class="card brand">
+  <div class="auth-card">
+    <h3>Update Profile / Change Password</h3>
+    <p>Change your password</p>
+
+    <div class="row">
+      <label for="pwdCurrent">Current Password:</label>
+      <input type="password" id="pwdCurrent" [(ngModel)]="currentPassword" placeholder="Current password" autocomplete="current-password">
+    </div>
+
+    <div class="row">
+      <label for="pwd">New Password:</label>
+      <input type="password" id="pwd" [(ngModel)]="password" placeholder="New password" autocomplete="new-password">
+    </div>
+
+
+    <div class="row">
+      <label for="pwdRepeat"> Repeat Password:</label>
+      <input type="password" id="pwdRepeat" [(ngModel)]="passwordRepeat" placeholder="Repeat new password" autocomplete="new-password">
+    </div>
+
+
+
+    <div class="row actions">
+      <button class="btn primary" (click)="updatePassword()">
+        <i class="fa-solid fa-key" style="margin-right:.4rem"></i>
+        Update
+      </button>
+
+    </div>
+
+
+    <div class="hint" *ngIf="msg" [ngStyle]="{ 'color': msgType === 'error' ? 'red' : 'green' }" style="margin-top: 10px;">
+      {{ msg }}
+    </div>
+  </div>
+</div>
+
+
+

@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Preferences — UFO Battle</title>
+    <meta name="color-scheme" content="dark light">
+
+    <!-- To set the theme as fast as possible to avoid flash of wrong theme -->
+    <script src="js/theme-boot.js"></script>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Icons (Font Awesome) -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          referrerpolicy="no-referrer"/>
+
+    <!-- Inject the shared topbar into #topbar on every page -->
+    <script src="js/topbar.js"></script>
+
+
+    <script defer src="js/api.js"></script>
+    <script defer src="js/app.js"></script>
+
+    <style>
+        /* small niceties for the score-explainer */
+        #score-explainer details summary {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        #score-explainer ol {
+            margin: .5rem 0 .25rem 1.2rem;
+        }
+
+        #score-explainer code {
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<body>
+<div class="wrap">
+
+    <!-- Shared navigation bar gets injected here by js/topbar.js -->
+    <div id="topbar"></div>
+
+
+    <div class="card brand">
+        <form class="pref" id="prefForm" onsubmit="return false;">
+            <h3 style="margin-top:0">Preferences</h3>
+            <!-- Number of UFOs (allowed: 1, 5, 9) -->
+            <div class="row">
+                <label for="selUfos">Number of UFOs</label>
+                <select id="selUfos">
+                    <option value="1">1</option>
+                    <option value="5" selected>5</option>
+                    <option value="9">9</option>
+                </select>
+            </div>
+            <!-- Game time in seconds (allowed: 60, 120, 180) -->
+            <div class="row">
+                <label for="selTime">Time (seconds)</label>
+                <select id="selTime">
+                    <option value="60" selected>60</option>
+                    <option value="120">120</option>
+                    <option value="180">180</option>
+                </select>
+            </div>
+            <!-- Double speed toggle (applies mid-wave at ⌊initial/2⌋ UFOs left) -->
+            <div class="row">
+                <label for="chkDouble">Double speed</label>
+                <input type="checkbox" id="chkDouble">
+            </div>
+            <div class="row" style="justify-content:flex-end;">
+                <button class="btn" id="btnPrefSave">
+                    <i class="fa-solid fa-check" aria-hidden="true" style="margin-right:.4rem"></i>
+                    Accept
+                </button>
+                <a class="btn primary" href="play.html">
+                    <i class="fa-solid fa-play" aria-hidden="true" style="margin-right:.4rem"></i>
+                    Play now
+                </a>
+            </div>
+        </form>
+
+        <!-- Score Explainer to help users understand final scoring -->
+        <div id="score-explainer" class="pref" style="margin-top:14px;">
+            <details open>
+                <summary><strong>How is the final score calculated?</strong></summary>
+                <ol>
+                    <li>Start with your <em>Raw score</em> (each hit = <code>+100</code>; a miss costs <code>25</code>,
+                        but raw never goes below <code>0</code>).
+                    </li>
+                    <li>Divide by a time factor:
+                        <ul>
+                            <li>60 s → ÷ 1</li>
+                            <li>120 s → ÷ 2</li>
+                            <li>180 s → ÷ 3</li>
+                        </ul>
+                    </li>
+                    <li>Subtract <code>50</code> points for each selected UFO beyond the first:
+                        <em>penalty = 50 × max(0, UFOs − 1)</em>.
+                    </li>
+                    <li>If <em>Double speed</em> was enabled, add <code>+250</code> points.</li>
+                    <li>Clamp at the end: <code>Final = max(0, …)</code></li>
+                </ol>
+                <p class="hint" id="scoreExample" style="margin-top:.5rem"></p>
+            </details>
+        </div>
+    </div>
+
+    <script>
+        // preferences page bootstrap
+        window.addEventListener('DOMContentLoaded', () => {
+            const selUfos = document.getElementById('selUfos');
+            const selTime = document.getElementById('selTime');
+            const chkDouble = document.getElementById('chkDouble');
+
+            const p = window.Prefs.load();
+            selUfos.value = String(p.ufos);
+            selTime.value = String(p.time);
+            chkDouble.checked = !!p.doubleSpeed;
+
+            document.getElementById('btnPrefSave').addEventListener('click', () => {
+                window.Prefs.save({
+                    ufos: parseInt(selUfos.value, 10),
+                    time: parseInt(selTime.value, 10),
+                    doubleSpeed: chkDouble.checked
+                });
+                alert('Saved!');
+                updateExplainer(); // refresh example after save
+            });
+
+            // Build the dynamic example line
+            function updateExplainer() {
+                const ex = document.getElementById('scoreExample');
+                if (!ex) return;
+
+                const prefs = window.Prefs.load();
+                const divisor = prefs.time / 60; // 60 -> 1, 120 -> 2, 180 -> 3
+                const ufoPenalty = Math.max(0, prefs.ufos - 1) * 50;
+                const speedBonus = prefs.doubleSpeed ? 250 : 0;
+
+                ex.textContent =
+                    `With your current settings (Time: ${prefs.time}s, UFOs: ${prefs.ufos}, ` +
+                    `Double speed: ${prefs.doubleSpeed ? 'on' : 'off'}), the formula is: ` +
+                    `Final = max(0, ⌊Raw / ${divisor}⌋ − ${ufoPenalty} + ${speedBonus}).`;
+            }
+
+            updateExplainer();
+        });
+    </script>
+
+    <footer>© UPM – Web Development Practical · UFO Battle</footer>
+</div>
+</body>
+</html>

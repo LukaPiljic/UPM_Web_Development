@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Register — UFO Battle</title>
+    <meta name="color-scheme" content="dark light">
+
+
+    <!-- To set the theme as fast as possible to avoid flash of wrong theme -->
+    <script src="js/theme-boot.js"></script>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Icons (Font Awesome) -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          referrerpolicy="no-referrer"/>
+
+    <!-- Inject the shared topbar into #topbar on every page -->
+    <script src="js/topbar.js"></script>
+
+
+    <script defer src="js/api.js"></script>
+    <script defer src="js/app.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+    <!-- Shared navigation bar gets injected here by js/topbar.js -->
+    <div id="topbar"></div>
+
+    <div class="card brand">
+
+        <!-- Registration form: the CSS class .register hooks the styles -->
+        <form class="register" id="regForm" onsubmit="return false;" novalidate>
+            <h3 style="margin-top:0">Register new User</h3>
+
+            <div class="row">
+                <label for="regUser">User</label>
+                <input id="regUser" type="text" maxlength="8" placeholder="username"
+                       autocomplete="username" inputmode="text" required>
+            </div>
+
+            <div class="row">
+                <!-- native email validation is enough for this exercise -->
+                <label for="regEmail">Email</label>
+                <input id="regEmail" type="email" placeholder="you@example.com"
+                       autocomplete="email" inputmode="email" required>
+            </div>
+
+            <div class="row">
+                <label for="regPass">Password</label>
+                <input id="regPass" type="password" placeholder="password"
+                       autocomplete="new-password" required>
+            </div>
+
+            <div class="row">
+                <!-- confirm password to avoid typos -->
+                <label for="regPass2">Repeat password</label>
+                <input id="regPass2" type="password" placeholder="password"
+                       autocomplete="new-password" required>
+            </div>
+
+            <!-- Button under the input -->
+            <div class="row actions">
+                <button class="btn primary" id="btnRegisterDo" type="submit" disabled>
+                    <i class="fa-solid fa-user-plus" aria-hidden="true" style="margin-right:.4rem"></i>
+                    Send
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Enable "Send" only when fields are filled and passwords match
+        const regUser = document.getElementById('regUser');
+        const regEmail = document.getElementById('regEmail');
+        const regPass = document.getElementById('regPass');
+        const regPass2 = document.getElementById('regPass2');
+        const btnRegisterDo = document.getElementById('btnRegisterDo');
+
+        // reads the current values
+        function check() {
+            const u = regUser.value.trim();
+            const e = regEmail.value.trim();
+            const p = regPass.value;
+            const q = regPass2.value;
+            // Button just gets activated iff all fields have values
+            btnRegisterDo.disabled = !(u && e && p && q && p === q);
+        }
+
+        [regUser, regEmail, regPass, regPass2].forEach(el => el.addEventListener('input', check));
+
+
+        // Prevent the submission, since it is not necessary for Prac. 1
+        document.getElementById('regForm').addEventListener('submit', (ev) => {
+            ev.preventDefault();
+            if (btnRegisterDo.disabled) return;
+            // for the second task
+            // TODO: API-Aufruf implementieren
+        });
+    </script>
+
+    <footer>© UPM – Web Development Practical · UFO Battle</footer>
+</div>
+</body>
+</html>

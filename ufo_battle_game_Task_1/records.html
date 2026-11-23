@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Records — UFO Battle</title>
+    <meta name="color-scheme" content="dark light">
+
+    <!-- To set the theme as fast as possible to avoid flash of wrong theme -->
+    <script src="js/theme-boot.js"></script>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Icons (Font Awesome) -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          referrerpolicy="no-referrer"/>
+
+    <!-- Inject the shared topbar into #topbar on every page -->
+    <script src="js/topbar.js"></script>
+
+
+    <script defer src="js/api.js"></script>
+    <script defer src="js/app.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+    <!-- Shared navigation bar gets injected here by js/topbar.js -->
+    <div id="topbar"></div>
+
+    <div class="card brand">
+        <h3 style="margin:0 0 8px 0">Records</h3>
+        <div id="recordsInfo" class="hint">Top 10 results from the server.</div>
+        <div style="overflow:auto; max-height:62vh;">
+            <table>
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>User</th>
+                    <th>Points</th>
+                    <th>UFOs</th>
+                    <th>Secs.</th>
+                    <th>Date</th>
+                </tr>
+                </thead>
+                <tbody id="recordsBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <script>
+        async function loadRecords() {
+            const info = document.getElementById('recordsInfo');
+            const body = document.getElementById('recordsBody');
+
+            info.textContent = 'Loading…';
+            body.innerHTML = '';
+
+            try {
+                const data = await window.API.fetch('/records', {method: 'GET'}); // API fetch
+                info.textContent = '';
+
+                if (!Array.isArray(data) || data.length === 0) {
+                    body.innerHTML = '<tr><td colspan="6">No records</td></tr>';
+                    return;
+                }
+                body.innerHTML = data.slice(0, 10).map((r, i) => {
+                    const d = r.recordDate ? new Date(r.recordDate) : null;
+                    const ds = d && isFinite(d) ? d.toLocaleDateString() : '-';
+
+                    return `<tr>
+            <td>${i + 1}</td>
+            <td>${r.username || '-'}</td>
+            <td>${r.punctuation}</td>
+            <td>${r.ufos}</td>
+            <td>${r.disposedTime}</td>
+            <td>${ds}</td>
+          </tr>`;
+                }).join('');
+
+            } catch (err) {
+                info.textContent = 'Could not load. You may need to login first. ' + err.message;
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', loadRecords);
+    </script>
+
+    <footer>© UPM – Web Development Practical · UFO Battle</footer>
+</div>
+</body>
+</html>

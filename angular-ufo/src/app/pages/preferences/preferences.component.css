@@ -1,0 +1,32 @@
+/* mostly for the collapsible text that explains the score calc */
+#score-explainer details summary {
+  cursor: pointer;
+  user-select: none;
+  margin-bottom: 6px;
+}
+
+#score-explainer ol { /* ol ist ordered list */
+  margin: 0.5rem 0 0.25rem 1.2rem;
+}
+
+#score-explainer li {
+  margin: 6px 0;
+}
+
+#score-explainer code {
+  font-weight: 700;
+  padding: 0 6px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.06);
+}
+
+
+/* rules for the checkbox, so we override the global rule in styles.css (input { min-width: 160px } )  */
+input[type="checkbox"] {
+  min-width: auto; /* deletes the 160px width */
+  width: auto;
+  padding: 0;
+  cursor: pointer;
+  transform: scale(1.2);
+  margin-left: 2px;
+}

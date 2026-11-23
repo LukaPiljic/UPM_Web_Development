@@ -1,0 +1,55 @@
+<div class="card brand">
+  <h3>Records</h3>
+  <div class="hint">Top 10 results from the server.</div>
+
+  <div style="display:flex; gap:20px; flex-wrap:wrap;">
+
+    <div style="flex:1; min-width:300px;">
+      <h4>Global Highscores</h4>
+      <p *ngIf="loading">Loading...</p>
+      <table>
+        <thead>
+        <tr>
+          <th>#</th><th>User</th><th>Pts</th><th>UFOs</th><th>Time</th><th>Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let r of globalRecords; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ r.username }}</td>
+          <td>{{ r.punctuation }}</td>
+          <td>{{ r.ufos }}</td>
+          <td>{{ r.disposedTime }}</td>
+          <td>{{ r.recordDate | date:'dd/MM/yyyy' }}</td>
+        </tr>
+        <tr *ngIf="!loading && globalRecords.length === 0">
+          <td colspan="6">No records found.</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="flex:1; min-width:300px;" *ngIf="auth.currentUser()">
+      <h4>My Personal Records</h4>
+      <table>
+        <thead>
+        <tr>
+          <th>User</th><th>Pts</th><th>UFOs</th><th>Time</th><th>Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let r of userRecords">
+          <td>{{ r.username }}</td>
+          <td>{{ r.punctuation }}</td>
+          <td>{{ r.ufos }}</td>
+          <td>{{ r.disposedTime }}</td>
+          <td>{{ r.recordDate | date:'dd/MM/yyyy' }}</td>
+        </tr>
+        <tr *ngIf="userRecords.length === 0">
+          <td colspan="5">No personal records (or server not running).</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

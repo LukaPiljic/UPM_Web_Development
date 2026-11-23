@@ -1,0 +1,46 @@
+/* Container für den Hauptinhalt zentrieren */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+/* for the 2 images */
+.hero-logos {
+  display: flex;
+  gap: 3rem; /* gap between the logos */
+  margin-bottom: 2rem;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.hero-logos img {
+  height: 90px;
+  width: auto;
+  object-fit: contain;
+  border-radius: 15px; /* this gives the rounded rect. look */
+}
+
+h1 {
+  margin: 0.5rem 0;
+  font-size: 2rem;
+  font-weight: 800; /* so this makes it extra bold */
+  line-height: 1.2;
+}
+
+h2 {
+  margin: 0 0 2rem 0;
+  font-size: 1.25rem;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.credit { /* created by ... */
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+  font-weight: 600;
+}

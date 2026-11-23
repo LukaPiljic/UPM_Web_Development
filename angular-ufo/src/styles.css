@@ -1,0 +1,352 @@
+:root {
+  /* Color Palette, so we define all the vars here */
+  --brand: #f7b84f;
+  --ink: #0a1428;
+  --bg-deep: #F4F7FE;
+  --panel: #FFFFFF;
+  --text: #0B1020;
+  --muted: #4A5A86;
+  --focus: #1e40af;
+  --ring: rgba(30, 64, 175, .25);
+
+  --brand-bar: #2563EB; /* Navigation bar */
+  --brand-hero: #93C5FD; /* Hero/Header background */
+  --star-color: #33415c; /* Star animation color */
+  --bg-base: #eef3ff; /* Main background */
+
+  --mix-ink-on-brand: #0e1631;
+  --mix-brand-border: #203363;
+}
+
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+
+/* body styling and background */
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  color: var(--text);
+  background: var(--bg-base);
+  scroll-behavior: smooth;
+  position: relative;
+}
+
+
+/* Star Background Animation, "targets" the body */
+body::before, body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: /* this draws little dots (the stars) */ radial-gradient(4px 4px at 20% 30%, var(--star-color) 50%, transparent 51%) repeat,
+  radial-gradient(3px 3px at 60% 70%, var(--star-color) 50%, transparent 51%) repeat;
+  background-size: 600px 600px, 800px 800px;
+  animation: starPan 90s linear infinite;
+  opacity: .8;
+}
+
+body::after {
+  animation-duration: 140s;
+  opacity: .6;
+}
+
+@keyframes starPan {
+  to {
+    background-position: 600px 400px, -800px 600px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before, body::after {
+    animation: none;
+  }
+
+  * {
+    transition: none !important;
+  }
+}
+
+
+/* Layout */
+/* is getting used in app.component.html */
+.wrap {
+  max-width: min(1600px, 95vw);
+  margin: 0 auto;
+  padding: clamp(16px, 2vw, 28px);
+}
+
+
+/* Topbar Navigation styling */
+/* is getting used in app.component.html */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 1.4rem 1.7rem;
+  border-radius: 12px;
+  background: var(--brand-hero);
+  color: var(--ink);
+  border: 1px solid rgba(255, 255, 255, .08);
+  flex-wrap: wrap;
+}
+
+.topbar .title {
+  font-weight: 800;
+  letter-spacing: .4px;
+}
+
+.topbar .right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  min-width: 180px;
+}
+
+.nav {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.nav a {
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  transition: background .15s;
+}
+
+/* for the text and the icons next to it */
+.nav a i {
+  margin-left: 0.3rem;
+}
+
+.nav a.active, .nav a:hover {
+  background: rgba(0, 0, 0, .1);
+}
+
+@media (max-width: 560px) {
+  .topbar .right {
+    width: 100%;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+}
+
+
+/* Cards & Forms */
+/* the rounded boxes that contain content */
+/* ofc used in the *.html pages */
+.card {
+  background: var(--panel);
+  border: 1px solid rgba(0, 0, 0, .08);
+  border-radius: 16px;
+  padding: clamp(16px, 2vw, 28px);
+  margin-top: 14px;
+}
+
+.card.brand {
+  background: var(--brand-hero);
+  color: var(--ink);
+  border: 1px solid color-mix(in oklab, var(--brand-hero) 74%, black);
+}
+
+.card.brand .hint {
+  color: color-mix(in oklab, var(--text) 55%, var(--muted));
+}
+
+/* Inputs & Buttons, so for preferences.component.html */
+.row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin: 8px 0;
+}
+
+label {
+  width: 220px;
+  font-weight: 600;
+}
+
+select, input {
+  padding: 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, .25);
+  background: #fff7e3;
+  color: var(--ink);
+  min-width: 160px;
+}
+
+/* styling of the buttons */
+.btn {
+  border: 1px solid rgba(255, 255, 255, .18);
+  background: #101a38;
+  color: #e6ecff; /* Keep buttons dark for contrast */
+  padding: 8px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.btn:hover {
+  filter: brightness(1.05);
+}
+
+.btn.primary {
+  background: #1b2a66;
+  border-color: #29428b;
+}
+
+.btn:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+.card.brand .btn {
+  background: #1e3a8a;
+  border-color: #1b2f6b;
+  color: #fff;
+}
+
+.card.brand .btn.primary {
+  background: #0f2a6a;
+  border-color: #0d2357;
+  color: #fff;
+}
+
+/* Game Screen */
+.play-wrap {
+  display: grid;
+  grid-template-columns:300px 1fr;
+  gap: 12px;
+}
+
+@media (min-width: 1200px) {
+  .play-wrap {
+    grid-template-columns: 340px 1fr;
+  }
+}
+
+.score-panel {
+  background: var(--brand-hero);
+  color: var(--ink);
+  border-radius: 12px;
+  padding: 12px;
+  border: 2px solid color-mix(in oklab, #000 18%, var(--brand-hero));
+  height: fit-content;
+}
+
+.canvas-wrap {
+  background: #f6f9ff;
+  border: 1px solid rgba(0, 0, 0, .08);
+  border-radius: 16px;
+  padding: 8px;
+  display: grid;
+  place-items: center;
+  min-height: 78vh;
+  position: relative;
+}
+
+canvas {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 10px;
+  background: #0b0f1f;
+}
+
+/* Game Over Overlay */
+.overlay {
+  position: absolute;
+  inset: 8px;
+  display: none;
+  place-items: center;
+  background: rgba(0, 0, 0, .55);
+  border-radius: 12px;
+}
+
+.overlay.show {
+  display: grid;
+}
+
+.endcard .final-score {
+  font-size: 1.35rem;
+  color: #ad22c5;
+}
+
+
+/* Tables, for displaying the data */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, .1);
+  text-align: left;
+}
+
+.card.brand table th, .card.brand table td {
+  border-bottom: 1px solid color-mix(in oklab, black 10%, var(--brand-hero));
+}
+
+.card.brand thead {
+  background: color-mix(in oklab, #ffffff 85%, var(--brand-hero));
+}
+
+.card.brand tbody tr:nth-child(odd) {
+  background: color-mix(in oklab, #ffffff 82%, var(--brand-hero));
+}
+
+.card.brand tbody tr:nth-child(even) {
+  background: color-mix(in oklab, #ffffff 90%, var(--brand-hero));
+}
+
+
+/* Utilities */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.hint {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.kbd {
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: #0e1631;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, .2);
+}
+
+/* Layout Adjustments for Forms */
+.register .row.actions, .login .row.actions, .pref .row:last-of-type {
+  margin-left: 232px;
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+@media (max-width: 520px) {
+  .register .row.actions, .login .row.actions, .pref .row:last-of-type {
+    margin-left: 0;
+  }
+}

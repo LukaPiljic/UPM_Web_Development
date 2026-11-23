@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <!-- For mobile browsers -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Home — UFO Battle</title>
+    <meta name="color-scheme" content="dark light">
+
+
+    <!-- To set the theme as fast as possible to avoid flash of wrong theme -->
+    <script src="js/theme-boot.js"></script>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Icons (Font Awesome) -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          referrerpolicy="no-referrer"/>
+
+    <!-- Inject the shared topbar into #topbar on every page -->
+    <script src="js/topbar.js"></script>
+
+    <!-- AppComponent scripts (auth helpers + common UI logic) -->
+    <script defer src="js/api.js"></script>
+    <script defer src="js/app.js"></script>
+
+</head>
+
+<body>
+<div class="wrap">
+
+    <!-- Shared navigation bar gets injected here by js/topbar.js -->
+    <div id="topbar"></div>
+
+
+    <div class="card">
+        <div class="hero">
+            <div class="hero-logos">
+                <img src="assets/img/upm_logo.png" alt="Universidad Politécnica de Madrid (UPM) logo">
+                <img src="assets/img/etsisi_logo.jpeg"
+                     alt="ETSISI – Escuela Técnica Superior de Ingeniería de Sistemas Informáticos logo">
+            </div>
+
+            <h1>E.T.S.I. Sistemas Informáticos</h1>
+            <h2>Web Development — Practical exercise: <em>UFO Battle</em></h2>
+
+            <div class="credit">Created by <strong>Luka Piljic</strong></div>
+        </div>
+
+        <div class="hint" style="margin-top:12px">
+            Use the menu to open <strong>Preferences</strong>, then go to <strong>Play</strong>.
+            Use <strong>Login</strong> to save your final score and view <strong>Records</strong>.
+        </div>
+    </div>
+
+    <footer>© UPM – Web Development Practical · UFO Battle</footer>
+</div>
+</body>
+</html>
+

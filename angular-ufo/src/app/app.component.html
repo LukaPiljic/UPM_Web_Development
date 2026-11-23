@@ -1,0 +1,36 @@
+<div class="wrap"> <!-- styles are in styles.css -->
+  <div class="topbar">
+    <div class="title">U.P.M. / <strong>UFO Battle</strong></div>
+
+    <nav class="nav">
+      <a routerLink="/home" routerLinkActive="active">Home <i class="fa-solid fa-house"></i></a> <!-- for the Icons -->
+      <a routerLink="/preferences" routerLinkActive="active">Preferences <i class="fa-solid fa-gear"></i></a>
+      <a routerLink="/play" routerLinkActive="active">Play <i class="fa-solid fa-play"></i></a>
+      <a routerLink="/records" routerLinkActive="active">Records <i class="fa-regular fa-circle-dot"></i></a>
+      <a *ngIf="authService.currentUser()" routerLink="/profile" routerLinkActive="active">Profile <i class="fa-solid fa-user-pen"></i></a>
+      <!-- so with this it only shows when we are logged inside the app -->
+    </nav>
+
+    <div class="right">
+      <span class="status">
+         {{ authService.currentUser() ? 'Logged in as ' + authService.currentUser() : 'Not logged in' }}
+      </span>
+
+      <nav class="nav">
+        <ng-container *ngIf="!authService.currentUser()">
+          <a routerLink="/register">Register <i class="fa-solid fa-user"></i></a>
+          <a routerLink="/login">Login <i class="fa-solid fa-right-to-bracket"></i></a>
+        </ng-container>
+
+        <ng-container *ngIf="authService.currentUser()">
+          <a (click)="logout()" style="cursor: pointer;">Logout <i class="fa-solid fa-right-from-bracket"></i></a>
+
+        </ng-container>
+      </nav>
+    </div>
+  </div>
+
+  <router-outlet></router-outlet>
+
+  <footer>© UPM – Web Development Practical · UFO Battle</footer>
+</div>
